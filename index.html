@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컴플라이언스팀장으로 살아보기 - 개선된 액션 실행</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        * {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981);
+            height: 8px;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
+        }
+
+        /* 긴급사태 효과 */
+        .emergency-flash {
+            animation: emergencyFlash 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes emergencyFlash {
+            0% { 
+                background-color: rgba(239, 68, 68, 0.1);
+                box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+            }
+            100% { 
+                background-color: rgba(239, 68, 68, 0.3);
+                box-shadow: 0 0 40px rgba(239, 68, 68, 0.6);
+            }
+        }
+
+        .emergency-shake {
+            animation: emergencyShake 0.5s ease-in-out infinite;
+        }
+
+        @keyframes emergencyShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .emergency-pulse {
+            animation: emergencyPulse 1s ease-in-out infinite;
+        }
+
+        @keyframes emergencyPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .siren-light {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .siren-light::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(239, 68, 68, 0.7), transparent);
+            animation: sirenSweep 1s linear infinite;
+        }
+
+        @keyframes sirenSweep {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* 월 전환 효과 */
+        .month-transition {
+            animation: monthTransition 2s ease-in-out;
+        }
+
+        @keyframes monthTransition {
+            0% { opacity: 1; transform: translateX(0); }
+            25% { opacity: 0; transform: translateX(-50px); }
+            75% { opacity: 0; transform: translateX(50px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
+        .calendar-flip {
+            animation: calendarFlip 1.5s ease-in-out;
+        }
+
+        @keyframes calendarFlip {
+            0% { transform: rotateY(0); }
+            50% { transform: rotateY(-90deg); }
+            100% { transform: rotateY(0); }
+        }
+
+        .count-up {
+            animation: countUp 1s ease-out;
+        }
+
+        @keyframes countUp {
+            0% { transform: scale(0.5) rotateY(180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotateY(90deg); opacity: 0.5; }
+            100% { transform: scale(1) rotateY(0deg); opacity: 1; }
+        }
+
+        .loading-progress {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #3b82f6);
+            border-radius: 2px;
+            animation: loadingProgress 2s ease-in-out;
+        }
+
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* 액션 진행 중 애니메이션 */
+        .action-progress-spinner {
+            width: 60px;
+            height: 60px;
+            border: 6px solid #e5e7eb;
+            border-top: 6px solid #3b82f6;
+            border-radius: 50%;
+            animation: actionSpinner 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes actionSpinner {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .action-progress-pulse {
+            animation: actionProgressPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes actionProgressPulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.05); }
+            100% { opacity: 0.6; transform: scale(1); }
+        }
+
+        .action-progress-bar {
+            height: 6px;
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            border-radius: 3px;
+            animation: actionProgressBar 3s ease-in-out;
+        }
+
+        @keyframes actionProgressBar {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        /* 액션 카드 호버 효과 */
+        .action-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.15);
+        }
+
+        .action-card:active {
+            transform: translateY(-2px);
+        }
+
+        /* 모달 애니메이션 */
+        .modal-enter {
+            animation: modalEnter 0.3s ease-out;
+        }
+
+        @keyframes modalEnter {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.7) translateY(-50px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) translateY(0); 
+            }
+        }
+
+        /* 점수 변화 애니메이션 */
+        .score-change {
+            animation: scoreChange 0.8s ease-out;
+        }
+
+        @keyframes scoreChange {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+
+        /* 버튼 클릭 효과 */
+        .btn-click {
+            animation: btnClick 0.2s ease-out;
+        }
+
+        @keyframes btnClick {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+
+        /* 제목 화면 스타일 */
+        .title-screen {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+            backdrop-filter: blur(15px);
+        }
+
+        .editable-name {
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+
+        .editable-name:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* 화면 전환 효과 */
+        .slide-in-right {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            0% { 
+                opacity: 0; 
+                transform: translateX(100px); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* 관련 액션 강조 효과 */
+        .related-action-highlight {
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+            animation: relatedActionGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes relatedActionGlow {
+            0% { box-shadow: 0 0 20px rgba(34, 197, 94, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(34, 197, 94, 0.5); }
+        }
+
+        /* 진행률 애니메이션 */
+        .progress-animation {
+            animation: progressFill 3s ease-in-out;
+        }
+
+        @keyframes progressFill {
+            0% { width: 0%; }
+            100% { width: var(--target-width); }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- 긴급사태 전체 화면 오버레이 -->
+    <div id="emergency-overlay" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-red-500 opacity-20 emergency-flash"></div>
+        <div class="absolute inset-0 siren-light"></div>
+    </div>
+
+    <!-- 월 전환 오버레이 -->
+    <div id="month-transition-overlay" class="fixed inset-0 z-40 hidden bg-blue-900 bg-opacity-80 flex items-center justify-center">
+        <div class="text-center text-white">
+            <div class="text-8xl mb-4">
+                <i class="fas fa-calendar-alt calendar-flip"></i>
+            </div>
+            <div class="text-4xl font-bold mb-4">
+                <span id="transition-month" class="count-up">1월</span>
+            </div>
+            <div class="text-xl mb-6">월이 지나가고 있습니다...</div>
+            <div class="loading-progress">
+                <div class="loading-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <!-- 제목 화면 -->
+        <div id="title-screen" class="card title-screen p-12 mb-6 text-center text-white">
+            <div class="mb-8">
+                <h1 class="text-6xl font-bold mb-6 drop-shadow-lg">
+                    <i class="fas fa-building mr-4"></i>
+                    컴플라이언스팀장으로 살아보기
+                </h1>
+                <p class="text-2xl mb-8 opacity-90">6개월 안에 회사의 컴플라이언스 체계를 완성하세요!</p>
+                <div class="text-lg opacity-80 mb-12">
+                    <p class="mb-2">🎯 목표: 모든 영역 70점 이상 달성</p>
+                    <p class="mb-2">💰 월 예산: 600만원</p>
+                    <p class="mb-2">⚡ 액션 포인트: 매월 4개</p>
+                    <p>🚨 긴급상황: 매월 1건 발생</p>
+                </div>
+                <button class="bg-green-500 hover:bg-green-600 text-white px-12 py-6 rounded-lg text-2xl font-bold transition-all duration-300 transform hover:scale-105 shadow-lg" onclick="startStory()">
+                    <i class="fas fa-play mr-3"></i>게임 시작
+                </button>
+            </div>
+        </div>
+
+        <!-- 헤더 -->
+        <div class="text-center text-white mb-8 hidden" id="main-header">
+            <h1 class="text-5xl font-bold mb-4 drop-shadow-lg">
+                <i class="fas fa-building mr-4"></i>
+                컴플라이언스팀장으로 살아보기
+            </h1>
+            <p class="text-xl opacity-90">6개월 안에 회사의 컴플라이언스 체계를 완성하세요!</p>
+        </div>
+
+        <!-- 게임 시작 화면 -->
+        <div id="intro-screen" class="card p-8 mb-6 hidden">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-play-circle text-blue-500 mr-2"></i>
+                    운명의 월요일 아침
+                </h2>
+                <div id="story-text" class="text-lg leading-relaxed mb-8 text-gray-700">
+                    <p class="mb-4">당신은 오늘도 평범하게 출근했습니다.</p>
+                    <p class="mb-4">커피를 마시며 오늘도 평온한 하루가 될 거라 생각하고 있었는데...</p>
+                    <p class="mb-6 text-2xl">☕ "좋은 아침! 오늘도 화이팅!"</p>
+                    <p class="mb-4">그런데 사무실 분위기가 심상치 않습니다.</p>
+                    <p class="mb-4">임원들이 급히 회의실로 들어가고, 직원들이 수군거리고 있네요.</p>
+                    <p class="text-2xl font-bold text-red-600 mb-6">
+                        <i class="fas fa-bell animate-bounce mr-2"></i>
+                        "전 직원 긴급소집! 회의실로 모이세요!"
+                    </p>
+                </div>
+                <button class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105" onclick="showCEOAnnouncement()">
+                    <i class="fas fa-arrow-right mr-2"></i>회의실로 가기
+                </button>
+            </div>
+        </div>
+
+        <!-- CEO 발표 화면 -->
+        <div id="ceo-screen" class="card p-8 mb-6 hidden">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-microphone text-blue-500 mr-2"></i>
+                    CEO 긴급 발표
+                </h2>
+                <div class="bg-yellow-100 border-l-4 border-yellow-500 p-6 mb-6">
+                    <div class="flex items-center">
+                        <i class="fas fa-user-tie text-3xl text-yellow-600 mr-4"></i>
+                        <p class="text-xl font-semibold">"여러분, 중요한 발표가 있습니다."</p>
+                    </div>
+                </div>
+                <div class="text-lg leading-relaxed mb-8 text-gray-700">
+                    <p class="mb-4 font-semibold">"우리 회사가 급속도로 성장하면서 컴플라이언스 리스크 관리가 매우 중요해졌습니다."</p>
+                    <div class="bg-blue-50 p-6 rounded-lg mb-6">
+                        <h3 class="text-xl font-bold mb-4 text-blue-800">
+                            <i class="fas fa-chart-line mr-2"></i>회사 현황
+                        </h3>
+                        <ul class="text-left space-y-2">
+                            <li><i class="fas fa-arrow-up text-green-500 mr-2"></i>최근 3년간 매출 300% 성장</li>
+                            <li><i class="fas fa-users text-blue-500 mr-2"></i>직원 수 300명 → 1,200명으로 확대</li>
+                            <li><i class="fas fa-expand text-purple-500 mr-2"></i>새로운 사업 영역 진출로 규제 복잡성 증가</li>
+                            <li><i class="fas fa-shield-alt text-red-500 mr-2"></i>컴플라이언스 전담 조직 필요성 대두</li>
+                        </ul>
+                    </div>
+                    <p class="mb-6 font-semibold">"이에 따라 새로운 컴플라이언스팀장을 임명하려고 합니다."</p>
+                    <p class="text-2xl text-center animate-pulse">👀 모든 시선이 당신에게 집중됩니다...</p>
+                </div>
+                <button class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105" onclick="showAppointment()">
+                    <i class="fas fa-heart text-red-300 mr-2 animate-bounce"></i>
+                    (두근두근...)
+                </button>
+            </div>
+        </div>
+
+        <!-- 임명 화면 -->
+        <div id="appointment-screen" class="card p-8 mb-6 hidden">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-medal text-yellow-500 mr-2"></i>
+                    임명식
+                </h2>
+                <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 rounded-lg mb-8">
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-scroll mr-2"></i>임명장
+                    </h3>
+                    <hr class="border-white opacity-30 mb-6">
+                    <p class="text-xl mb-6">
+                        <span id="player-name" class="editable-name font-bold" onclick="editName()" title="클릭하여 이름을 입력하세요">[당신의 이름]</span>
+                    </p>
+                    <p class="mb-4">위 사람을 <strong>컴플라이언스팀장</strong>으로 임명하며,</p>
+                    <p class="mb-4">회사의 모든 컴플라이언스 리스크를 체계적으로</p>
+                    <p class="mb-6">관리하고 개선할 것을 명한다.</p>
+                    <div class="text-2xl font-bold mb-6">
+                        <p><i class="fas fa-clock mr-2 text-yellow-300"></i>기한: 6개월</p>
+                        <p><i class="fas fa-target mr-2 text-green-300"></i>목표: 모든 영역 70점 이상 달성</p>
+                    </div>
+                    <p class="text-right text-lg">CEO 김대표 (인)</p>
+                </div>
+                <p class="text-xl mb-4 font-semibold">
+                    <i class="fas fa-briefcase text-blue-500 mr-2"></i>
+                    "축하합니다! 이제 당신이 우리 회사의 컴플라이언스팀장입니다!"
+                </p>
+                <p class="text-lg text-gray-600 mb-8">하지만 기쁠 시간이 없습니다... 벌써 해결해야 할 과제들이 산더미처럼 쌓여있습니다!</p>
+                <button class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105" onclick="showTutorial()">
+                    <i class="fas fa-search mr-2"></i>현황 파악하기
+                </button>
+            </div>
+        </div>
+
+        <!-- 튜토리얼 화면 -->
+        <div id="tutorial-screen" class="card p-8 mb-6 hidden">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-chart-bar text-blue-500 mr-2"></i>
+                    현황 파악
+                </h2>
+                <p class="text-xl mb-8 font-semibold">"먼저 우리 회사의 현재 컴플라이언스 상황을 파악해보세요"</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                        <h4 class="font-bold text-lg mb-2">🏛️ 공정거래 (25점)</h4>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                            <div class="bg-red-500 h-3 rounded-full progress-bar" style="width: 25%"></div>
+                        </div>
+                        <small class="text-red-600">위험 - 독점금지법 위반 리스크</small>
+                    </div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                        <h4 class="font-bold text-lg mb-2">💼 부패방지 (30점)</h4>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                            <div class="bg-red-500 h-3 rounded-full progress-bar" style="width: 30%"></div>
+                        </div>
+                        <small class="text-red-600">위험 - 청탁금지법 체계 부족</small>
+                    </div>
+                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                        <h4 class="font-bold text-lg mb-2">🔐 정보보호 (45점)</h4>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                            <div class="bg-yellow-500 h-3 rounded-full progress-bar" style="width: 45%"></div>
+                        </div>
+                        <small class="text-yellow-600">주의 - 개인정보보호 체계 미흡</small>
+                    </div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                        <h4 class="font-bold text-lg mb-2">👥 고용노동 (20점)</h4>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                            <div class="bg-red-500 h-3 rounded-full progress-bar" style="width: 20%"></div>
+                        </div>
+                        <small class="text-red-600">매우위험 - 근로기준법 위반 소지</small>
+                    </div>
+                    <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded">
+                        <h4 class="font-bold text-lg mb-2">🤝 하도급 (15점)</h4>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                            <div class="bg-red-500 h-3 rounded-full progress-bar" style="width: 15%"></div>
+                        </div>
+                        <small class="text-red-600">매우위험 - 하도급법 위반 위험</small>
+                    </div>
+                    <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                        <h4 class="font-bold text-lg mb-2">⚠️ 안전 (50점)</h4>
+                        <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                            <div class="bg-yellow-500 h-3 rounded-full progress-bar" style="width: 50%"></div>
+                        </div>
+                        <small class="text-yellow-600">주의 - 안전관리체계 부족</small>
+                    </div>
+                </div>
+
+                <div class="bg-red-100 border border-red-400 rounded-lg p-6 mb-8">
+                    <p class="text-2xl font-bold text-red-600 mb-2">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>
+                        "이럴 수가... 거의 모든 영역이 위험 상태네요!"
+                    </p>
+                    <p class="text-xl font-semibold">
+                        <i class="fas fa-target mr-2 text-blue-500"></i>
+                        목표: 6개월 내 모든 영역 70점 이상 달성!
+                    </p>
+                </div>
+
+                <button class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105" onclick="showResourceCheck()">
+                    <i class="fas fa-coins mr-2"></i>자원 확인하기
+                </button>
+            </div>
+        </div>
+
+        <!-- 자원 확인 화면 -->
+        <div id="resource-screen" class="card p-8 mb-6 hidden">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                    <i class="fas fa-wallet text-green-500 mr-2"></i>
+                    자원 확인
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-green-50 p-6 rounded-lg border-2 border-green-200">
+                        <div class="text-4xl mb-2">💰</div>
+                        <h3 class="text-xl font-bold text-green-600 mb-2">월 예산</h3>
+                        <p class="text-2xl font-bold">6,000,000원</p>
+                        <small class="text-gray-600">제한된 예산으로 전략적 선택 필요</small>
+                    </div>
+                    <div class="bg-blue-50 p-6 rounded-lg border-2 border-blue-200">
+                        <div class="text-4xl mb-2">⚡</div>
+                        <h3 class="text-xl font-bold text-blue-600 mb-2">액션 포인트</h3>
+                        <p class="text-2xl font-bold">매월 4개</p>
+                        <small class="text-gray-600">한 달에 최대 4개 액션 실행 가능</small>
+                    </div>
+                    <div class="bg-purple-50 p-6 rounded-lg border-2 border-purple-200">
+                        <div class="text-4xl mb-2">📅</div>
+                        <h3 class="text-xl font-bold text-purple-600 mb-2">기한</h3>
+                        <p class="text-2xl font-bold">6개월</p>
+                        <small class="text-gray-600">2025년 1월 ~ 6월까지</small>
+                    </div>
+                    <div class="bg-red-50 p-6 rounded-lg border-2 border-red-200">
+                        <div class="text-4xl mb-2">🚨</div>
+                        <h3 class="text-xl font-bold text-red-600 mb-2">긴급상황</h3>
+                        <p class="text-2xl font-bold">매월 1건</p>
+                        <small class="text-gray-600">예상치 못한 위기 상황 대응</small>
+                    </div>
+                </div>
+
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8">
+                    <h4 class="text-xl font-bold mb-4">
+                        <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                        예산 활용 전략
+                    </h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                        <p>• <strong>기본 교육</strong>: 2,000,000원 (AP 1)</p>
+                        <p>• <strong>시스템 구축</strong>: 4,000,000원 (AP 2)</p>
+                        <p>• <strong>외부 컨설팅</strong>: 5,000,000원 (AP 2)</p>
+                        <p>• <strong>대형 프로젝트</strong>: 6,000,000원 (AP 3)</p>
+                    </div>
+                    <div class="bg-yellow-100 border border-yellow-400 rounded-lg p-4 mt-4">
+                        <p class="font-semibold text-yellow-800">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            주의: 예산 제약으로 모든 액션을 실행할 수 없습니다. 우선순위를 정해 전략적으로 선택하세요!
+                        </p>
+                    </div>
+                </div>
+
+                <button class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105" onclick="startGame()">
+                    <i class="fas fa-play mr-2"></i>게임 시작하기
+                </button>
+            </div>
+        </div>
+
+        <!-- 메인 게임 화면 -->
+        <div id="game-screen" class="hidden">
+            <!-- 현재 상태 표시 -->
+            <div class="card p-6 mb-6">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center bg-blue-50 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">📅</div>
+                        <h3 class="font-bold text-blue-600">현재</h3>
+                        <p id="current-month" class="text-xl font-bold">1월</p>
+                    </div>
+                    <div class="text-center bg-green-50 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">💰</div>
+                        <h3 class="font-bold text-green-600">예산</h3>
+                        <p id="current-budget" class="text-lg font-bold">6,000,000원</p>
+                    </div>
+                    <div class="text-center bg-purple-50 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">⚡</div>
+                        <h3 class="font-bold text-purple-600">AP</h3>
+                        <p id="current-ap" class="text-xl font-bold">4</p>
+                    </div>
+                    <div class="text-center bg-yellow-50 p-4 rounded-lg">
+                        <div class="text-2xl mb-2">🏆</div>
+                        <h3 class="font-bold text-yellow-600">평균점수</h3>
+                        <p id="average-score" class="text-xl font-bold">31점</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 컴플라이언스 현황 -->
+            <div class="card p-6 mb-6">
+                <h3 class="text-2xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-chart-pie text-blue-500 mr-2"></i>
+                    컴플라이언스 현황
+                </h3>
+                <div id="compliance-status" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+            </div>
+
+            <!-- 긴급상황 알림 -->
+            <div id="emergency-card" class="card p-6 mb-6 hidden emergency-pulse emergency-shake">
+                <div class="bg-red-100 border-l-4 border-red-500 p-6 siren-light">
+                    <h3 class="text-2xl font-bold text-red-600 mb-4">
+                        <i class="fas fa-exclamation-triangle animate-bounce mr-2"></i>
+                        긴급상황 발생!
+                    </h3>
+                    <p id="emergency-description" class="text-lg mb-4"></p>
+                    <div class="bg-yellow-100 border border-yellow-400 rounded-lg p-4 mb-6">
+                        <p class="font-semibold text-yellow-800 text-center">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            긴급상황을 먼저 해결해야 이번 달 액션을 선택할 수 있습니다!
+                        </p>
+                    </div>
+                    <div id="emergency-options" class="space-y-3">
+                        <!-- JavaScript로 동적 생성 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 액션 선택 -->
+            <div id="actions-section" class="card p-6 mb-6">
+                <h3 class="text-2xl font-bold mb-4 text-gray-800">
+                    <i class="fas fa-tasks text-purple-500 mr-2"></i>
+                    이번 달 액션
+                </h3>
+                <div id="actions-header-text">
+                    <p class="text-gray-600 mb-6">사용 가능한 액션을 선택하세요 (예산과 AP를 고려하여 선택)</p>
+                </div>
+                <div id="actions-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- JavaScript로 동적 생성 -->
+                </div>
+            </div>
+
+            <!-- 월 진행 버튼 -->
+            <div class="card p-6 text-center">
+                <button class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg text-xl font-semibold mr-4 transition-all duration-300 transform hover:scale-105" onclick="nextMonth()" id="next-month-btn">
+                    <i class="fas fa-calendar-plus mr-2"></i>다음 달로
+                </button>
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-4 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105" onclick="showGameStatus()">
+                    <i class="fas fa-chart-bar mr-2"></i>현재 상태 보기
+                </button>
+            </div>
+        </div>
+
+        <!-- 게임 종료 화면 -->
+        <div id="end-screen" class="card p-8 text-center hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-flag-checkered text-green-500 mr-2"></i>
+                6개월 후...
+            </h2>
+            <div id="final-results">
+                <!-- JavaScript로 동적 생성 -->
+            </div>
+            <button class="bg-green-500 hover:bg-green-600 text-white px-8 py-4 rounded-lg text-xl font-semibold transition-all duration-300 transform hover:scale-105" onclick="restartGame()">
+                <i class="fas fa-redo mr-2"></i>다시 도전하기
+            </button>
+        </div>
+    </div>
+
+    <!-- 모달 창들 -->
+    <div id="action-modal" class="fixed inset-0 z-30 hidden bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 m-4 max-w-2xl w-full max-h-screen overflow-y-auto modal-enter">
+            <h3 id="modal-action-title" class="text-2xl font-bold mb-4"></h3>
+            <div id="modal-action-content" class="mb-6"></div>
+            <div class="text-center space-x-4">
+                <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300" onclick="executeAction()">
+                    <i class="fas fa-check mr-2"></i>실행하기
+                </button>
+                <button class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300" onclick="closeModal()">
+                    <i class="fas fa-times mr-2"></i>취소
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 액션 진행 중 모달 -->
+    <div id="progress-modal" class="fixed inset-0 z-30 hidden bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 m-4 max-w-2xl w-full modal-enter">
+            <div class="text-center">
+                <div class="action-progress-spinner mb-6"></div>
+                <h3 id="progress-title" class="text-2xl font-bold mb-4 text-blue-600 action-progress-pulse">액션을 실행하고 있습니다...</h3>
+                <p id="progress-description" class="text-lg text-gray-600 mb-6"></p>
+                <div class="w-full bg-gray-200 rounded-full h-2 mb-4">
+                    <div class="action-progress-bar"></div>
+                </div>
+                <p class="text-sm text-gray-500">잠시만 기다려주세요...</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="result-modal" class="fixed inset-0 z-30 hidden bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 m-4 max-w-2xl w-full max-h-screen overflow-y-auto modal-enter">
+            <h3 class="text-2xl font-bold mb-4">
+                <i class="fas fa-chart-line text-blue-500 mr-2"></i>
+                액션 진행 결과
+            </h3>
+            <div id="result-content" class="mb-6"></div>
+            <div class="text-center">
+                <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300" onclick="closeModal()">
+                    <i class="fas fa-check mr-2"></i>확인
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="emergency-result-modal" class="fixed inset-0 z-30 hidden bg-black bg-opacity-50 flex items-center justify-center">
+        <div class="bg-white rounded-lg p-8 m-4 max-w-2xl w-full max-h-screen overflow-y-auto modal-enter">
+            <h3 class="text-2xl font-bold mb-4">
+                <i class="fas fa-exclamation-triangle text-red-500 mr-2"></i>
+                긴급상황 처리 결과
+            </h3>
+            <div id="emergency-result-content" class="mb-6"></div>
+            <div class="text-center">
+                <button class="bg-green-500 hover:bg-green-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300" onclick="closeEmergencyResult()">
+                    <i class="fas fa-check mr-2"></i>확인하고 액션 선택하기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 게임 상태 변수
+        let gameState = {
+            month: 1,
+            budget: 6000000,
+            actionPoints: 4,
+            maxBudget: 6000000,
+            maxAP: 4,
+            compliance: {
+                fairTrade: 25,      // 공정거래
+                antiCorruption: 30, // 부패방지
+                dataProtection: 45, // 정보보호
+                labor: 20,          // 고용노동
+                subcontract: 15,    // 하도급
+                safety: 50          // 안전
+            },
+            completedActions: [],
+            currentEmergency: null,
+            emergencyResolved: false,
+            monthlyEvents: [],
+            emergencyCategory: null // 긴급상황 관련 카테고리
+        };
+
+        let playerName = "[당신의 이름]";
+
+        // 컴플라이언스 영역 정보
+        const complianceAreas = {
+            fairTrade: {
+                name: '🏛️ 공정거래',
+                description: '독점금지법, 부당한 공동행위 방지',
+                getDangerLevel: (score) => score < 40 ? 'danger' : score < 70 ? 'warning' : 'success'
+            },
+            antiCorruption: {
+                name: '💼 부패방지',
+                description: '청탁금지법, 윤리강령 준수',
+                getDangerLevel: (score) => score < 40 ? 'danger' : score < 70 ? 'warning' : 'success'
+            },
+            dataProtection: {
+                name: '🔐 정보보호',
+                description: '개인정보보호법, 데이터 보안',
+                getDangerLevel: (score) => score < 40 ? 'danger' : score < 70 ? 'warning' : 'success'
+            },
+            labor: {
+                name: '👥 고용노동',
+                description: '근로기준법, 직장 내 괴롭힘 방지',
+                getDangerLevel: (score) => score < 40 ? 'danger' : score < 70 ? 'warning' : 'success'
+            },
+            subcontract: {
+                name: '🤝 하도급',
+                description: '하도급법, 대금지급 관리',
+                getDangerLevel: (score) => score < 40 ? 'danger' : score < 70 ? 'warning' : 'success'
+            },
+            safety: {
+                name: '⚠️ 안전',
+                description: '중대재해처벌법, 산업안전보건법',
+                getDangerLevel: (score) => score < 40 ? 'danger' : score < 70 ? 'warning' : 'success'
+            }
+        };
+
+        // 액션 데이터 (법적 근거 삭제됨)
+        const actions = {
+            // 공정거래 (3개)
+            fairTrade1: {
+                name: '독점금지법 교육',
+                category: 'fairTrade',
+                cost: 3000000,
+                ap: 1,
+                effect: { fairTrade: 25 },
+                description: '독점규제 및 공정거래법에 대한 전직원 교육 프로그램',
+                progressResults: {
+                    participationRate: 87,
+                    scoreImprovement: 25,
+                    keyLearning: '부당한 공동행위 금지 및 경쟁사와의 적절한 관계 설정 방법을 직원들이 숙지하게 되었습니다.'
+                }
+            },
+            fairTrade2: {
+                name: '입찰시스템 개선',
+                category: 'fairTrade',
+                cost: 5000000,
+                ap: 2,
+                effect: { fairTrade: 30 },
+                description: '공정하고 투명한 입찰 프로세스 구축',
+                progressResults: {
+                    participationRate: 92,
+                    scoreImprovement: 30,
+                    keyLearning: '입찰 과정의 투명성이 확보되어 담합 리스크가 현저히 감소했습니다.'
+                }
+            },
+            fairTrade3: {
+                name: '경쟁법 컨설팅',
+                category: 'fairTrade',
+                cost: 6000000,
+                ap: 3,
+                effect: { fairTrade: 35 },
+                description: '외부 전문가를 통한 경쟁법 컴플라이언스 체계 구축',
+                progressResults: {
+                    participationRate: 95,
+                    scoreImprovement: 35,
+                    keyLearning: '체계적인 경쟁법 가이드라인이 수립되어 임직원이 명확한 행동 기준을 갖게 되었습니다.'
+                }
+            },
+
+            // 부패방지 (3개)
+            antiCorruption1: {
+                name: '청탁금지법 교육',
+                category: 'antiCorruption',
+                cost: 2500000,
+                ap: 1,
+                effect: { antiCorruption: 25 },
+                description: '청탁금지법 및 윤리 규정 준수 교육',
+                progressResults: {
+                    participationRate: 89,
+                    scoreImprovement: 25,
+                    keyLearning: '청탁금지법의 구체적 기준과 금품 수수 금지 원칙을 직원들이 명확히 이해하게 되었습니다.'
+                }
+            },
+            antiCorruption2: {
+                name: '윤리강령 제정',
+                category: 'antiCorruption',
+                cost: 4000000,
+                ap: 2,
+                effect: { antiCorruption: 30 },
+                description: '회사 고유의 윤리강령 및 행동준칙 제정',
+                progressResults: {
+                    participationRate: 91,
+                    scoreImprovement: 30,
+                    keyLearning: '윤리적 딜레마 상황에서의 명확한 판단 기준을 제시하여 직원들의 윤리 의식이 향상되었습니다.'
+                }
+            },
+            antiCorruption3: {
+                name: '내부신고센터 구축',
+                category: 'antiCorruption',
+                cost: 5500000,
+                ap: 2,
+                effect: { antiCorruption: 35 },
+                description: '익명 신고 시스템 및 신고자 보호 체계 구축',
+                progressResults: {
+                    participationRate: 85,
+                    scoreImprovement: 35,
+                    keyLearning: '안전한 신고 체계가 구축되어 부패 행위에 대한 예방 및 조기 발견이 가능해졌습니다.'
+                }
+            },
+
+            // 정보보호 (3개)
+            dataProtection1: {
+                name: '개인정보보호 교육',
+                category: 'dataProtection',
+                cost: 3000000,
+                ap: 1,
+                effect: { dataProtection: 20 },
+                description: '개인정보 처리 및 보호 규정 교육',
+                progressResults: {
+                    participationRate: 88,
+                    scoreImprovement: 20,
+                    keyLearning: '개인정보 수집·이용·제공 절차와 정보주체의 권리를 직원들이 정확히 숙지하게 되었습니다.'
+                }
+            },
+            dataProtection2: {
+                name: '보안시스템 강화',
+                category: 'dataProtection',
+                cost: 5000000,
+                ap: 2,
+                effect: { dataProtection: 25 },
+                description: '기술적 보호조치 및 보안 솔루션 도입',
+                progressResults: {
+                    participationRate: 94,
+                    scoreImprovement: 25,
+                    keyLearning: '암호화 및 접근권한 관리 시스템이 도입되어 정보 보안 수준이 크게 향상되었습니다.'
+                }
+            },
+            dataProtection3: {
+                name: '데이터 거버넌스',
+                category: 'dataProtection',
+                cost: 6000000,
+                ap: 3,
+                effect: { dataProtection: 30 },
+                description: '체계적인 데이터 관리 및 생명주기 관리',
+                progressResults: {
+                    participationRate: 92,
+                    scoreImprovement: 30,
+                    keyLearning: '데이터 분류 및 등급화를 통해 체계적인 정보 관리가 가능해졌습니다.'
+                }
+            },
+
+            // 고용노동 (3개)
+            labor1: {
+                name: '근로기준법 교육',
+                category: 'labor',
+                cost: 2500000,
+                ap: 1,
+                effect: { labor: 25 },
+                description: '근로조건 및 노동자 권익 보호 교육',
+                progressResults: {
+                    participationRate: 90,
+                    scoreImprovement: 25,
+                    keyLearning: '근로시간 관리, 휴가제도, 임금지급 원칙 등 기본적인 노동법 규정을 직원들이 이해하게 되었습니다.'
+                }
+            },
+            labor2: {
+                name: '직장괴롭힘 방지',
+                category: 'labor',
+                cost: 4000000,
+                ap: 2,
+                effect: { labor: 30 },
+                description: '직장 내 괴롭힘 예방 및 대응 체계 구축',
+                progressResults: {
+                    participationRate: 86,
+                    scoreImprovement: 30,
+                    keyLearning: '건전한 직장 문화 조성을 위한 구체적인 행동 지침을 직원들이 체득하게 되었습니다.'
+                }
+            },
+            labor3: {
+                name: '고용평등 프로그램',
+                category: 'labor',
+                cost: 5000000,
+                ap: 2,
+                effect: { labor: 35 },
+                description: '평등한 고용환경 및 일·가정 양립 지원',
+                progressResults: {
+                    participationRate: 93,
+                    scoreImprovement: 35,
+                    keyLearning: '성별, 연령, 종교 등에 의한 차별 금지 원칙과 다양성 존중 문화가 확산되었습니다.'
+                }
+            },
+
+            // 하도급 (3개)
+            subcontract1: {
+                name: '하도급법 교육',
+                category: 'subcontract',
+                cost: 3500000,
+                ap: 1,
+                effect: { subcontract: 30 },
+                description: '하도급거래 공정화 및 상생협력 교육',
+                progressResults: {
+                    participationRate: 84,
+                    scoreImprovement: 30,
+                    keyLearning: '하도급대금은 반드시 60일 이내에 지급해야 한다는 것을 직원들이 알게 되었습니다.'
+                }
+            },
+            subcontract2: {
+                name: '계약서 표준화',
+                category: 'subcontract',
+                cost: 4500000,
+                ap: 2,
+                effect: { subcontract: 25 },
+                description: '공정한 계약조건 및 분쟁 예방 체계 구축',
+                progressResults: {
+                    participationRate: 88,
+                    scoreImprovement: 25,
+                    keyLearning: '표준화된 계약서를 통해 불공정 계약조건이 제거되고 협력업체와의 신뢰가 향상되었습니다.'
+                }
+            },
+            subcontract3: {
+                name: '상생협력 프로그램',
+                category: 'subcontract',
+                cost: 6000000,
+                ap: 3,
+                effect: { subcontract: 35 },
+                description: '대·중소기업 상생협력 및 동반성장 체계',
+                progressResults: {
+                    participationRate: 91,
+                    scoreImprovement: 35,
+                    keyLearning: '기술 및 자금 지원을 통한 상생협력 문화가 정착되어 지속가능한 파트너십이 구축되었습니다.'
+                }
+            },
+
+            // 안전 (3개)
+            safety1: {
+                name: '중대재해처벌법 대응',
+                category: 'safety',
+                cost: 4000000,
+                ap: 2,
+                effect: { safety: 25 },
+                description: '안전보건관리체계 구축 및 경영책임자 의무 이행',
+                progressResults: {
+                    participationRate: 89,
+                    scoreImprovement: 25,
+                    keyLearning: '경영진의 안전에 대한 책임과 안전보건관리체계의 중요성을 직원들이 인식하게 되었습니다.'
+                }
+            },
+            safety2: {
+                name: '산업안전 교육',
+                category: 'safety',
+                cost: 3000000,
+                ap: 1,
+                effect: { safety: 20 },
+                description: '작업장 안전수칙 및 사고 예방 교육',
+                progressResults: {
+                    participationRate: 92,
+                    scoreImprovement: 20,
+                    keyLearning: '개인보호구 착용 및 안전 작업 절차를 직원들이 체계적으로 숙지하게 되었습니다.'
+                }
+            },
+            safety3: {
+                name: '위험성평가 시스템',
+                category: 'safety',
+                cost: 5500000,
+                ap: 2,
+                effect: { safety: 30 },
+                description: '위험요인 식별 및 개선조치 체계 구축',
+                progressResults: {
+                    participationRate: 87,
+                    scoreImprovement: 30,
+                    keyLearning: '사전 위험성 평가를 통한 예방 중심의 안전 관리 체계를 직원들이 이해하게 되었습니다.'
+                }
+            }
+        };
+
+        // 긴급상황 데이터 - 각 긴급상황에 관련 카테고리 추가
+        const emergencies = [
+            {
+                month: 1,
+                category: 'subcontract', // 하도급 관련 긴급상황
+                title: '하도급 업체 갈등',
+                description: '협력업체 A사가 하도급 대금 90일 지연을 이유로 공정거래위원회 신고를 예고함.',
+                options: [
+                    {
+                        text: '대금 지연 사유를 즉시 파악하고, 우선 긴급 지급분을 송금한 뒤 나머지 지급 계획을 서면으로 통보',
+                        result: {
+                            effects: { subcontract: 25, antiCorruption: 5 },
+                            feedback: '✅ 정답! 법 위반 리스크와 거래 신뢰 회복을 동시에 해결하는 현실적인 방안입니다. 하도급거래 공정화법에 따른 적절한 대응으로 장기적 신뢰관계 구축이 가능합니다.',
+                            rating: '우수한 대응'
+                        }
+                    },
+                    {
+                        text: '법무팀에만 사건을 전달해 공정위 조사 대비 자료를 준비',
+                        result: {
+                            effects: { subcontract: 10, budget: -1000000 },
+                            feedback: '절차적으로는 맞지만, 대금 지급 문제 해결이 늦어져 신고 철회 가능성이 낮습니다. 보다 적극적인 문제 해결이 필요했습니다.',
+                            rating: '보통'
+                        }
+                    },
+                    {
+                        text: '문제를 제기한 협력업체와의 거래를 중단하고 다른 업체로 교체 추진',
+                        result: {
+                            effects: { subcontract: -15, fairTrade: -10 },
+                            feedback: '⚠️ 틀린 답변입니다. 즉시 리스크를 악화시키고 법적·평판적 피해를 확대하는 잘못된 대응입니다. 하도급법 위반 소지가 있으며 업계 평판 손상 우려가 큽니다.',
+                            rating: '부적절한 대응'
+                        }
+                    }
+                ]
+            },
+            {
+                month: 2,
+                category: 'dataProtection', // 정보보호 관련 긴급상황
+                title: '개인정보 유출 신고',
+                description: '고객 개인정보 1,000건이 유출되었다는 신고가 개인정보보호위원회에 접수됨.',
+                options: [
+                    {
+                        text: '유출 사실과 범위를 즉시 확인하고, 관계 기관과 피해 고객에게 법정 기한 내 통지와 사과 조치',
+                        result: {
+                            effects: { dataProtection: 15, budget: -1000000 },
+                            feedback: '✅ 정답! 법적 의무를 지키고 피해 확산을 막으며 신뢰 회복 가능. 개인정보보호법에 따른 적절한 대응으로 추가 피해를 방지했습니다.',
+                            rating: '우수한 대응'
+                        }
+                    },
+                    {
+                        text: '내부 조사를 충분히 마친 뒤, 일정 기간 후 고객에게 알림',
+                        result: {
+                            effects: { dataProtection: -5 },
+                            feedback: '사실 확인은 정확하나 신속한 통지가 지연되어 법 위반 우려. 신중한 접근이지만 시간 지연으로 피해가 확산될 수 있습니다.',
+                            rating: '보통'
+                        }
+                    },
+                    {
+                        text: '유출 규모를 축소해 발표',
+                        result: {
+                            effects: { dataProtection: -15, antiCorruption: -10 },
+                            feedback: '⚠️ 틀린 답변입니다. 법 위반과 평판 악화를 동시에 초래하는 잘못된 대응. 사실 은폐는 더 큰 법적 책임을 야기할 수 있습니다.',
+                            rating: '부적절한 대응'
+                        }
+                    }
+                ]
+            },
+            {
+                month: 3,
+                category: 'fairTrade', // 공정거래 관련 긴급상황
+                title: '공정거래위원회 현장조사',
+                description: '공정거래위원회에서 담합 의혹으로 현장 조사를 실시한다는 통보를 받음.',
+                options: [
+                    {
+                        text: '관련 자료를 우선 정리한 뒤, 필요 시 법률 자문을 받음',
+                        result: {
+                            effects: { fairTrade: 10, budget: -1000000 },
+                            feedback: '준비는 되지만, 초기부터 법률 전문가를 투입하지 않아 대응이 미흡할 수 있음',
+                            rating: '보통'
+                        }
+                    },
+                    {
+                        text: '조사팀 방문 전, 문제 소지가 있는 자료를 삭제하거나 수정함',
+                        result: {
+                            effects: { fairTrade: -15, antiCorruption: -10 },
+                            feedback: '⚠️ 틀린 답변입니다. 불법 행위로 간주되어 법적 처벌과 평판 피해가 커지는 잘못된 대응',
+                            rating: '부적절한 대응'
+                        }
+                    },
+                    {
+                        text: '법무팀과 조사 대응 전담팀을 즉시 구성하여, 조사 범위에 맞춘 자료 정리와 대응 시나리오 마련',
+                        result: {
+                            effects: { fairTrade: 25, antiCorruption: 10 },
+                            feedback: '✅ 정답! 법적 리스크 관리와 효율적 대응이 가능',
+                            rating: '우수한 대응'
+                        }
+                    }
+                ]
+            },
+            {
+                month: 4,
+                category: 'labor', // 고용노동 관련 긴급상황
+                title: '직장 내 성희롱 신고',
+                description: '임원급에 의한 성희롱 사건이 신고되어 언론에 보도될 위험이 있습니다.',
+                options: [
+                    {
+                        text: '외부 전문기관에 조사를 의뢰하되, 합의를 통해 조용히 마무리한다',
+                        result: {
+                            effects: { labor: 5, budget: -2000000 },
+                            feedback: '객관성을 확보할 수 있으나, 법적·윤리적 문제를 키우고, 추가 피해 및 신뢰 상실로 이어질 수 있습니다.',
+                            rating: '중간 정도'
+                        }
+                    },
+                    {
+                        text: '내부 규정에 따라 공정하고 신속하게 조사하며, 피해자 보호 조치를 즉시 시행한다',
+                        result: {
+                            effects: { labor: 25, antiCorruption: 15 },
+                            feedback: '✅ 정답! 법규 준수와 피해 최소화를 동시에 달성하는 최적의 대응입니다.',
+                            rating: '우수한 대응'
+                        }
+                    },
+                    {
+                        text: '사건 당사자들을 같은 회의에 불러 대질시키며 사실 확인',
+                        result: {
+                            effects: { labor: -15, antiCorruption: -10 },
+                            feedback: '⚠️ 틀린 답변입니다. 피해자에게 심리적 압박과 2차 피해를 유발할 수 있는 부적절한 방식입니다.',
+                            rating: '부적절한 대응'
+                        }
+                    }
+                ]
+            },
+            {
+                month: 5,
+                category: 'safety', // 안전 관련 긴급상황
+                title: '산업재해 발생',
+                description: '작업장에서 중대재해가 발생하여 근로자 1명이 중상을 입음.',
+                options: [
+                    {
+                        text: '즉시 작업을 중단하고 응급조치 및 안전점검을 실시한다',
+                        result: {
+                            effects: { safety: 25, budget: -1500000 },
+                            feedback: '✅ 정답! 인명 피해 최소화와 추가 사고 예방을 동시에 달성',
+                            rating: '우수한 대응'
+                        }
+                    },
+                    {
+                        text: '언론 보도를 막는 데 집중한다',
+                        result: {
+                            effects: { safety: -10, antiCorruption: -5 },
+                            feedback: '⚠️ 틀린 답변입니다. 근본 문제 해결이 지연되고, 법적·사회적 신뢰가 크게 훼손됨',
+                            rating: '부적절한 대응'
+                        }
+                    },
+                    {
+                        text: '사고 원인을 조사하고, 관련자를 우선 징계한다',
+                        result: {
+                            effects: { safety: 15 },
+                            feedback: '책임 규명은 필요하나, 초기 안전조치보다 징계를 먼저 하면 재발 방지 효과가 떨어짐',
+                            rating: '중간 정도'
+                        }
+                    }
+                ]
+            },
+            {
+                month: 6,
+                category: 'antiCorruption', // 부패방지 관련 긴급상황 - 새로 추가된 6월 긴급상황
+                title: '리조트 숙박권 제안 사건',
+                description: '직원 B는 자사와 계약 협상을 진행 중인 업체 담당자로부터 "이번 계약이 잘 성사되면 주말에 가족과 함께 쓸 수 있는 리조트 숙박권을 주겠다"는 제안을 받았다.',
+                options: [
+                    {
+                        text: '정중히 거절하고, 제안 사실을 상사에게만 알린다',
+                        result: {
+                            effects: { antiCorruption: 15, budget: -500000 },
+                            feedback: '보고는 했지만, 공식적인 기록·조치를 남기지 않아 재발 방지에 한계가 있습니다. 투명한 처리가 더 필요했습니다.',
+                            rating: '중간 정도'
+                        }
+                    },
+                    {
+                        text: '즉시 거절하고, 회사 윤리경영 담당 부서에 공식 보고한다',
+                        result: {
+                            effects: { antiCorruption: 30, fairTrade: 10 },
+                            feedback: '✅ 정답! 부패방지 규정을 준수하고, 투명한 절차를 거쳐 재발 방지가 가능합니다. 청탁금지법에 따른 모범적인 대응으로 조직 전체의 윤리 의식 향상에 기여합니다.',
+                            rating: '우수한 대응'
+                        }
+                    },
+                    {
+                        text: '제안을 받아두었다가 계약이 끝난 뒤 사용한다',
+                        result: {
+                            effects: { antiCorruption: -20, fairTrade: -15 },
+                            feedback: '⚠️ 틀린 답변입니다. 부패행위로 간주되어 법적·징계상 불이익을 받을 수 있습니다. 청탁금지법 위반으로 형사처벌과 조직 전체의 신뢰도 하락을 초래할 수 있습니다.',
+                            rating: '부적절한 대응'
+                        }
+                    }
+                ]
+            }
+        ];
+
+        let selectedAction = null;
+        let currentEmergencyChoice = null;
+
+        // 시각적 효과 함수들
+        function triggerEmergencyEffect() {
+            // 전체 화면 긴급 효과
+            const overlay = document.getElementById('emergency-overlay');
+            overlay.classList.remove('hidden');
+            
+            // 3초 후 효과 제거
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 3000);
+
+            // 브라우저 진동 효과 (모바일)
+            if ('vibrate' in navigator) {
+                navigator.vibrate([200, 100, 200, 100, 200]);
+            }
+        }
+
+        function triggerMonthTransition() {
+            const overlay = document.getElementById('month-transition-overlay');
+            const monthText = document.getElementById('transition-month');
+            
+            overlay.classList.remove('hidden');
+            monthText.textContent = `${gameState.month}월`;
+            
+            // 2초 후 오버레이 제거
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 2000);
+        }
+
+        function addClickEffect(element) {
+            element.classList.add('btn-click');
+            setTimeout(() => {
+                element.classList.remove('btn-click');
+            }, 200);
+        }
+
+        // 이름 입력 함수
+        function editName() {
+            const currentName = document.getElementById('player-name').textContent;
+            const newName = prompt('컴플라이언스팀장으로 임명될 당신의 이름을 입력해주세요:', currentName === '[당신의 이름]' ? '' : currentName);
+            
+            if (newName && newName.trim() !== '') {
+                playerName = newName.trim();
+                document.getElementById('player-name').textContent = playerName;
+            }
+        }
+
+        // 스토리 진행 함수들
+        function startStory() {
+            addClickEffect(event.target);
+            setTimeout(() => {
+                document.getElementById('title-screen').classList.add('hidden');
+                document.getElementById('main-header').classList.remove('hidden');
+                document.getElementById('intro-screen').classList.remove('hidden');
+            }, 200);
+        }
+
+        function showCEOAnnouncement() {
+            addClickEffect(event.target);
+            setTimeout(() => {
+                document.getElementById('intro-screen').classList.add('hidden');
+                document.getElementById('ceo-screen').classList.remove('hidden');
+            }, 200);
+        }
+
+        function showAppointment() {
+            addClickEffect(event.target);
+            setTimeout(() => {
+                document.getElementById('ceo-screen').classList.add('hidden');
+                document.getElementById('appointment-screen').classList.remove('hidden');
+            }, 200);
+        }
+
+        function showTutorial() {
+            addClickEffect(event.target);
+            setTimeout(() => {
+                document.getElementById('appointment-screen').classList.add('hidden');
+                document.getElementById('tutorial-screen').classList.remove('hidden');
+            }, 200);
+        }
+
+        function showResourceCheck() {
+            addClickEffect(event.target);
+            setTimeout(() => {
+                document.getElementById('tutorial-screen').classList.add('hidden');
+                document.getElementById('resource-screen').classList.remove('hidden');
+            }, 200);
+        }
+
+        function startGame() {
+            addClickEffect(event.target);
+            setTimeout(() => {
+                document.getElementById('resource-screen').classList.add('hidden');
+                document.getElementById('game-screen').classList.remove('hidden');
+                updateGameDisplay();
+                checkEmergency();
+            }, 200);
+        }
+
+        // 게임 디스플레이 업데이트
+        function updateGameDisplay() {
+            // 현재 상태 업데이트
+            document.getElementById('current-month').textContent = `${gameState.month}월`;
+            document.getElementById('current-budget').textContent = `${gameState.budget.toLocaleString()}원`;
+            document.getElementById('current-ap').textContent = gameState.actionPoints;
+            
+            // 평균 점수 계산
+            const avgScore = Math.round(Object.values(gameState.compliance).reduce((a, b) => a + b, 0) / Object.keys(gameState.compliance).length);
+            document.getElementById('average-score').textContent = `${avgScore}점`;
+
+            // 컴플라이언스 현황 업데이트
+            updateComplianceStatus();
+            
+            // 액션 섹션 표시/숨김 업데이트
+            updateActionsDisplay();
+        }
+
+        function updateComplianceStatus() {
+            const statusContainer = document.getElementById('compliance-status');
+            statusContainer.innerHTML = '';
+
+            Object.entries(gameState.compliance).forEach(([key, score]) => {
+                const area = complianceAreas[key];
+                const dangerLevel = area.getDangerLevel(score);
+                const colorClass = dangerLevel === 'danger' ? 'red' : dangerLevel === 'warning' ? 'yellow' : 'green';
+                
+                const statusItem = document.createElement('div');
+                statusItem.className = `bg-${colorClass}-50 border-l-4 border-${colorClass}-500 p-4 rounded score-change`;
+                statusItem.innerHTML = `
+                    <h4 class="font-bold text-lg mb-2">${area.name} (${score}점)</h4>
+                    <div class="w-full bg-gray-200 rounded-full h-3 mb-2">
+                        <div class="bg-${colorClass}-500 h-3 rounded-full progress-bar" style="width: ${Math.min(score, 100)}%;"></div>
+                    </div>
+                    <small class="text-${colorClass}-600">${area.description}</small>
+                `;
+                statusContainer.appendChild(statusItem);
+            });
+        }
+
+        function updateActionsDisplay() {
+            const actionsSection = document.getElementById('actions-section');
+            
+            // 긴급상황이 해결되지 않았으면 액션 섹션 숨김
+            if (gameState.currentEmergency && !gameState.emergencyResolved) {
+                actionsSection.classList.add('hidden');
+            } else {
+                actionsSection.classList.remove('hidden');
+                updateActionsGrid();
+            }
+        }
+
+        function updateActionsGrid() {
+            const actionsContainer = document.getElementById('actions-grid');
+            const headerText = document.getElementById('actions-header-text');
+            actionsContainer.innerHTML = '';
+
+            // 긴급상황이 해결된 후라면 해당 카테고리 액션만 표시
+            let availableActions = actions;
+            if (gameState.emergencyResolved && gameState.emergencyCategory) {
+                availableActions = Object.fromEntries(
+                    Object.entries(actions).filter(([actionId, action]) => 
+                        action.category === gameState.emergencyCategory
+                    )
+                );
+                
+                // 헤더 텍스트 변경
+                const categoryName = complianceAreas[gameState.emergencyCategory].name;
+                headerText.innerHTML = `
+                    <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg mb-6">
+                        <p class="font-semibold text-green-800 mb-2">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            긴급상황 해결 완료! 관련 액션 추천
+                        </p>
+                        <p class="text-green-700">
+                            ${categoryName} 관련 긴급상황이 해결되었습니다. 이제 ${categoryName} 영역의 체계적 개선을 위한 액션을 선택하세요.
+                        </p>
+                    </div>
+                `;
+            } else {
+                // 일반 헤더 텍스트
+                headerText.innerHTML = `
+                    <p class="text-gray-600 mb-6">사용 가능한 액션을 선택하세요 (예산과 AP를 고려하여 선택)</p>
+                `;
+            }
+
+            Object.entries(availableActions).forEach(([actionId, action]) => {
+                const canAfford = gameState.budget >= action.cost && gameState.actionPoints >= action.ap;
+                const isCompleted = gameState.completedActions.includes(actionId);
+                
+                // 긴급상황 해결 후 관련 액션인 경우 특별한 스타일 적용
+                const isRelatedAction = gameState.emergencyResolved && gameState.emergencyCategory && action.category === gameState.emergencyCategory;
+                
+                const actionCard = document.createElement('div');
+                actionCard.className = `action-card bg-white p-4 rounded-lg border-2 transition-all duration-300 ${!canAfford || isCompleted ? 'opacity-50 cursor-not-allowed border-gray-200' : 'cursor-pointer border-gray-300 hover:border-blue-500 hover:shadow-lg'} ${isRelatedAction ? 'related-action-highlight border-green-400' : ''}`;
+                actionCard.innerHTML = `
+                    ${isRelatedAction ? '<div class="absolute top-2 right-2"><span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-bold">추천!</span></div>' : ''}
+                    <div class="relative">
+                        <h4 class="font-bold text-lg mb-2 ${isRelatedAction ? 'text-green-700' : ''}">${action.name}</h4>
+                        <p class="text-sm text-gray-600 mb-2"><strong>영역:</strong> ${complianceAreas[action.category].name}</p>
+                        <div class="bg-blue-50 p-3 rounded mb-3 text-sm">
+                            <strong>프로그램 내용:</strong> ${action.description}
+                        </div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-green-600 font-semibold">💰 ${action.cost.toLocaleString()}원</span>
+                            <span class="text-purple-600 font-semibold">⚡ ${action.ap}점</span>
+                        </div>
+                        ${isCompleted ? '<div class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">✅ 완료됨</div>' : ''}
+                    </div>
+                `;
+                
+                if (canAfford && !isCompleted) {
+                    actionCard.onclick = () => selectAction(actionId);
+                }
+                
+                actionsContainer.appendChild(actionCard);
+            });
+        }
+
+        // 액션 선택
+        function selectAction(actionId) {
+            selectedAction = actionId;
+            const action = actions[actionId];
+            
+            document.getElementById('modal-action-title').innerHTML = `<i class="fas fa-cog text-blue-500 mr-2"></i>${action.name}`;
+            document.getElementById('modal-action-content').innerHTML = `
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded mb-4">
+                    <strong class="text-blue-800">프로그램 개요:</strong><br>
+                    <span class="text-blue-700">${action.description}</span>
+                </div>
+                <hr class="my-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-green-50 p-3 rounded">
+                        <div class="text-2xl mb-1">💰</div>
+                        <p class="font-semibold">비용</p>
+                        <p class="text-green-600 font-bold">${action.cost.toLocaleString()}원</p>
+                    </div>
+                    <div class="bg-purple-50 p-3 rounded">
+                        <div class="text-2xl mb-1">⚡</div>
+                        <p class="font-semibold">액션 포인트</p>
+                        <p class="text-purple-600 font-bold">${action.ap}점</p>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded">
+                        <div class="text-2xl mb-1">🎯</div>
+                        <p class="font-semibold">대상 영역</p>
+                        <p class="text-blue-600 font-bold">${complianceAreas[action.category].name}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('action-modal').classList.remove('hidden');
+        }
+
+        // 중간 진행 화면 표시 함수
+        function showActionInProgress(action) {
+            document.getElementById('progress-title').textContent = `${action.name}을(를) 실행하고 있습니다...`;
+            document.getElementById('progress-description').textContent = `${action.description} 프로그램이 진행 중입니다. 잠시만 기다려주세요.`;
+            
+            document.getElementById('progress-modal').classList.remove('hidden');
+        }
+
+        // 액션 실행 (수정된 부분)
+        function executeAction() {
+            if (!selectedAction) return;
+            
+            const action = actions[selectedAction];
+            
+            // 먼저 액션 모달 닫기
+            closeModal();
+            
+            // 중간 진행 화면 표시
+            showActionInProgress(action);
+            
+            // 3초 후 실제 액션 실행 및 결과 표시
+            setTimeout(() => {
+                // 비용 및 AP 차감
+                gameState.budget -= action.cost;
+                gameState.actionPoints -= action.ap;
+                
+                // 효과 적용
+                Object.entries(action.effect).forEach(([area, effect]) => {
+                    gameState.compliance[area] = Math.min(100, gameState.compliance[area] + effect);
+                });
+                
+                // 완료된 액션에 추가
+                gameState.completedActions.push(selectedAction);
+                
+                // 진행 중 모달 닫기
+                document.getElementById('progress-modal').classList.add('hidden');
+                
+                // 최종 결과 표시
+                showActionProgressResult(action);
+                updateGameDisplay();
+            }, 3000);
+        }
+
+        function showActionProgressResult(action) {
+            const progressResults = action.progressResults;
+            
+            document.getElementById('result-content').innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="text-6xl mb-4">📈</div>
+                    <h4 class="text-2xl font-bold text-blue-600">${action.name} 완료!</h4>
+                </div>
+                
+                <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg mb-6">
+                    <h4 class="text-xl font-bold text-green-800 mb-4">📊 최종 결과</h4>
+                    
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="font-semibold text-green-700">직원 참여율</span>
+                            <span class="font-bold text-green-600">${progressResults.participationRate}%</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-4">
+                            <div class="bg-green-500 h-4 rounded-full progress-animation" style="--target-width: ${progressResults.participationRate}%; width: ${progressResults.participationRate}%;"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <p class="font-semibold text-green-700 mb-2">
+                            <i class="fas fa-arrow-up mr-2"></i>
+                            회사의 ${complianceAreas[action.category].name.substring(2)} 수준이 ${progressResults.scoreImprovement}점 올랐습니다.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white p-4 rounded-lg border border-green-200">
+                        <h5 class="font-bold text-green-800 mb-2">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            핵심 성과
+                        </h5>
+                        <p class="text-green-700">${progressResults.keyLearning}</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div class="bg-red-50 p-3 rounded text-center">
+                        <p class="font-semibold text-red-800">소모 예산</p>
+                        <p class="text-red-600 text-xl font-bold">${action.cost.toLocaleString()}원</p>
+                    </div>
+                    <div class="bg-purple-50 p-3 rounded text-center">
+                        <p class="font-semibold text-purple-800">소모 AP</p>
+                        <p class="text-purple-600 text-xl font-bold">${action.ap}점</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                    <div class="bg-green-50 p-3 rounded text-center">
+                        <p class="font-semibold text-green-800">잔여 예산</p>
+                        <p class="text-green-600 text-xl font-bold">${gameState.budget.toLocaleString()}원</p>
+                    </div>
+                    <div class="bg-blue-50 p-3 rounded text-center">
+                        <p class="font-semibold text-blue-800">잔여 AP</p>
+                        <p class="text-blue-600 text-xl font-bold">${gameState.actionPoints}점</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('result-modal').classList.remove('hidden');
+        }
+
+        // 긴급상황 체크
+        function checkEmergency() {
+            const emergency = emergencies.find(e => e.month === gameState.month);
+            if (emergency && !gameState.currentEmergency) {
+                gameState.currentEmergency = emergency;
+                gameState.emergencyResolved = false;
+                gameState.emergencyCategory = emergency.category; // 긴급상황 카테고리 저장
+                
+                // 긴급상황 시각적 효과 발동
+                triggerEmergencyEffect();
+                
+                // 1초 후 긴급상황 표시
+                setTimeout(() => {
+                    showEmergency(emergency);
+                    updateActionsDisplay(); // 액션 섹션 숨김
+                }, 1000);
+            }
+        }
+
+        function showEmergency(emergency) {
+            document.getElementById('emergency-description').textContent = emergency.description;
+            
+            const optionsContainer = document.getElementById('emergency-options');
+            optionsContainer.innerHTML = '';
+            
+            emergency.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'w-full bg-white hover:bg-red-50 border-2 border-red-200 hover:border-red-300 p-4 rounded-lg text-left transition-all duration-300 transform hover:scale-105';
+                button.innerHTML = `
+                    <div class="flex items-center">
+                        <div class="text-2xl mr-3">${String.fromCharCode(65 + index)})</div>
+                        <span class="font-semibold">${option.text}</span>
+                    </div>
+                `;
+                button.onclick = () => selectEmergencyOption(index);
+                optionsContainer.appendChild(button);
+            });
+            
+            document.getElementById('emergency-card').classList.remove('hidden');
+        }
+
+        function selectEmergencyOption(optionIndex) {
+            const emergency = gameState.currentEmergency;
+            const selectedOption = emergency.options[optionIndex];
+            const result = selectedOption.result;
+            
+            // 효과 적용
+            Object.entries(result.effects).forEach(([area, effect]) => {
+                if (area === 'budget') {
+                    gameState.budget += effect;
+                } else {
+                    gameState.compliance[area] = Math.max(0, Math.min(100, gameState.compliance[area] + effect));
+                }
+            });
+            
+            // 긴급상황 해결됨으로 표시
+            gameState.emergencyResolved = true;
+            
+            // 결과 표시
+            showEmergencyResult(selectedOption, result);
+            
+            // 긴급상황 카드 숨기기
+            document.getElementById('emergency-card').classList.add('hidden');
+            
+            updateGameDisplay();
+        }
+
+        function showEmergencyResult(option, result) {
+            const ratingClass = result.rating === '우수한 대응' ? 'green' : 
+                                result.rating === '좋은 대응' ? 'blue' : 
+                                result.rating === '보통' ? 'yellow' : 'red';
+            
+            document.getElementById('emergency-result-content').innerHTML = `
+                <div class="text-center mb-6">
+                    <div class="text-6xl mb-4">
+                        ${result.rating === '우수한 대응' ? '🎉' : 
+                          result.rating === '좋은 대응' ? '👍' : 
+                          result.rating === '보통' || result.rating === '중간 정도' ? '🤔' : '😰'}
+                    </div>
+                    <h4 class="text-2xl font-bold text-${ratingClass}-600">${result.rating}</h4>
+                </div>
+                
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded mb-4">
+                    <h4 class="font-bold text-blue-800 mb-2">🎯 선택한 대응책</h4>
+                    <p class="text-blue-700 font-semibold">"${option.text}"</p>
+                </div>
+                
+                <div class="bg-${ratingClass}-50 border-l-4 border-${ratingClass}-500 p-4 rounded mb-6">
+                    <h4 class="font-bold text-${ratingClass}-800 mb-2">📊 전문가 분석</h4>
+                    <p class="text-${ratingClass}-700">${result.feedback}</p>
+                </div>
+                
+                <div class="bg-gray-50 p-4 rounded-lg">
+                    <h4 class="font-bold text-gray-800 mb-3">💫 실제 발생한 효과</h4>
+                    <div class="grid grid-cols-1 gap-2">
+                        ${Object.entries(result.effects).map(([area, effect]) => {
+                            if (area === 'budget') {
+                                return `<div class="bg-${effect > 0 ? 'green' : 'red'}-100 border border-${effect > 0 ? 'green' : 'red'}-200 rounded p-2">
+                                    <span class="text-${effect > 0 ? 'green' : 'red'}-800 font-semibold">💰 예산: ${effect > 0 ? '+' : ''}${effect.toLocaleString()}원</span>
+                                </div>`;
+                            } else {
+                                return `<div class="bg-${effect > 0 ? 'green' : 'red'}-100 border border-${effect > 0 ? 'green' : 'red'}-200 rounded p-2">
+                                    <span class="text-${effect > 0 ? 'green' : 'red'}-800 font-semibold">${complianceAreas[area].name}: ${effect > 0 ? '+' : ''}${effect}점</span>
+                                </div>`;
+                            }
+                        }).join('')}
+                    </div>
+                </div>
+                
+                <div class="bg-green-100 border border-green-400 rounded-lg p-4 mt-6 text-center">
+                    <p class="font-semibold text-green-800">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        긴급상황이 해결되었습니다! 이제 관련 영역의 액션을 추천드립니다.
+                    </p>
+                </div>
+            `;
+            
+            document.getElementById('emergency-result-modal').classList.remove('hidden');
+        }
+
+        // 긴급상황 결과 모달 닫기 (특별 처리)
+        function closeEmergencyResult() {
+            document.getElementById('emergency-result-modal').classList.add('hidden');
+            
+            // 액션 섹션을 slide-in 효과와 함께 표시
+            const actionsSection = document.getElementById('actions-section');
+            actionsSection.classList.add('slide-in-right');
+            updateActionsDisplay();
+            
+            // 애니메이션 완료 후 클래스 제거
+            setTimeout(() => {
+                actionsSection.classList.remove('slide-in-right');
+            }, 500);
+        }
+
+        // 다음 달로 진행
+        function nextMonth() {
+            if (gameState.month >= 6) {
+                endGame();
+                return;
+            }
+            
+            addClickEffect(event.target);
+            
+            // 월 전환 효과 발동
+            triggerMonthTransition();
+            
+            // 2초 후 실제 월 진행
+            setTimeout(() => {
+                gameState.month++;
+                gameState.budget = gameState.maxBudget; // 예산 충전
+                gameState.actionPoints = gameState.maxAP; // AP 충전
+                gameState.completedActions = []; // 완료된 액션 초기화
+                gameState.currentEmergency = null; // 긴급상황 초기화
+                gameState.emergencyResolved = false; // 긴급상황 해결 상태 초기화
+                gameState.emergencyCategory = null; // 긴급상황 카테고리 초기화
+                
+                updateGameDisplay();
+                checkEmergency();
+            }, 2000);
+        }
+
+        // 게임 종료
+        function endGame() {
+            const avgScore = Math.round(Object.values(gameState.compliance).reduce((a, b) => a + b, 0) / Object.keys(gameState.compliance).length);
+            const allAreasAbove70 = Object.values(gameState.compliance).every(score => score >= 70);
+            const allAreasAbove60 = Object.values(gameState.compliance).every(score => score >= 60);
+            
+            let grade, message, achievement, emoji;
+            
+            if (avgScore >= 85) {
+                grade = 'S';
+                message = '완벽한 컴플라이언스 마스터!';
+                achievement = '모든 영역에서 최고 수준의 성과를 달성했습니다.';
+                emoji = '🏆';
+            } else if (avgScore >= 75) {
+                grade = 'A';
+                message = '컴플라이언스 전문가 수준!';
+                achievement = '우수한 컴플라이언스 체계를 구축했습니다.';
+                emoji = '🥇';
+            } else if (allAreasAbove70) {
+                grade = 'B';
+                message = '목표 달성! 안전한 회사 완성!';
+                achievement = '모든 영역에서 안전 수준을 달성했습니다.';
+                emoji = '🥈';
+            } else if (allAreasAbove60) {
+                grade = 'C';
+                message = '기본 수준 달성';
+                achievement = '기본적인 컴플라이언스 체계를 구축했습니다.';
+                emoji = '🥉';
+            } else {
+                grade = 'D';
+                message = '더 노력이 필요합니다';
+                achievement = '일부 영역에서 여전히 위험 요소가 남아있습니다.';
+                emoji = '😰';
+            }
+            
+            document.getElementById('final-results').innerHTML = `
+                <div class="bg-gradient-to-r from-blue-500 to-purple-600 text-white p-8 rounded-lg mb-6">
+                    <div class="text-center">
+                        <div class="text-8xl mb-4">${emoji}</div>
+                        <h2 class="text-3xl font-bold mb-2">최종 성과 리포트</h2>
+                        <div class="text-6xl font-bold my-6">${grade}등급</div>
+                        <h3 class="text-2xl mb-4">${message}</h3>
+                        <p class="text-lg opacity-90">${achievement}</p>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                    ${Object.entries(gameState.compliance).map(([key, score]) => {
+                        const area = complianceAreas[key];
+                        const dangerLevel = area.getDangerLevel(score);
+                        const colorClass = dangerLevel === 'danger' ? 'red' : dangerLevel === 'warning' ? 'yellow' : 'green';
+                        return `
+                            <div class="bg-${colorClass}-50 border-l-4 border-${colorClass}-500 p-4 rounded-lg text-center">
+                                <h4 class="font-bold text-${colorClass}-800 mb-2">${area.name}</h4>
+                                <div class="text-3xl font-bold text-${colorClass}-600 mb-2">${score}점</div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="bg-${colorClass}-500 h-3 rounded-full" style="width: ${Math.min(score, 100)}%;"></div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('')}
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg text-center">
+                    <h3 class="text-2xl font-bold mb-4">
+                        <i class="fas fa-chart-line text-blue-500 mr-2"></i>
+                        최종 통계
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="bg-white p-4 rounded">
+                            <div class="text-2xl font-bold text-blue-600">${avgScore}점</div>
+                            <p class="text-gray-600">평균 점수</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <div class="text-2xl font-bold text-green-600">${Object.values(gameState.compliance).filter(score => score >= 70).length}/6</div>
+                            <p class="text-gray-600">목표 달성 영역</p>
+                        </div>
+                        <div class="bg-white p-4 rounded">
+                            <div class="text-2xl font-bold text-purple-600">6개월</div>
+                            <p class="text-gray-600">플레이 기간</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('game-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+        }
+
+        // 게임 재시작
+        function restartGame() {
+            addClickEffect(event.target);
+            
+            // 게임 상태 초기화
+            gameState = {
+                month: 1,
+                budget: 6000000,
+                actionPoints: 4,
+                maxBudget: 6000000,
+                maxAP: 4,
+                compliance: {
+                    fairTrade: 25,
+                    antiCorruption: 30,
+                    dataProtection: 45,
+                    labor: 20,
+                    subcontract: 15,
+                    safety: 50
+                },
+                completedActions: [],
+                currentEmergency: null,
+                emergencyResolved: false,
+                monthlyEvents: [],
+                emergencyCategory: null
+            };
+            
+            playerName = "[당신의 이름]";
+            document.getElementById('player-name').textContent = playerName;
+            
+            // 화면 초기화
+            setTimeout(() => {
+                document.getElementById('end-screen').classList.add('hidden');
+                document.getElementById('main-header').classList.add('hidden');
+                document.getElementById('title-screen').classList.remove('hidden');
+                closeModal();
+            }, 200);
+        }
+
+        // 게임 상태 보기
+        function showGameStatus() {
+            const avgScore = Math.round(Object.values(gameState.compliance).reduce((a, b) => a + b, 0) / Object.keys(gameState.compliance).length);
+            
+            alert(`📊 현재 게임 상태\n\n• 진행 기간: ${gameState.month}/6개월\n• 평균 점수: ${avgScore}점\n• 잔여 예산: ${gameState.budget.toLocaleString()}원\n• 잔여 AP: ${gameState.actionPoints}점\n• 완료 액션: ${gameState.completedActions.length}개\n\n목표: 모든 영역 70점 이상!`);
+        }
+
+        // 모달 관련 함수
+        function closeModal() {
+            document.querySelectorAll('.fixed.inset-0').forEach(modal => {
+                if (modal.id !== 'emergency-overlay' && modal.id !== 'month-transition-overlay') {
+                    modal.classList.add('hidden');
+                }
+            });
+            selectedAction = null;
+        }
+
+        // 모달 외부 클릭 시 닫기
+        window.onclick = function(event) {
+            if (event.target.classList.contains('fixed') && event.target.classList.contains('inset-0')) {
+                if (event.target.id !== 'emergency-overlay' && event.target.id !== 'month-transition-overlay') {
+                    if (event.target.id === 'emergency-result-modal') {
+                        closeEmergencyResult();
+                    } else if (event.target.id === 'progress-modal') {
+                        // 진행 중 모달은 클릭으로 닫을 수 없음
+                        return;
+                    } else {
+                        closeModal();
+                    }
+                }
+            }
+        }
+
+        // 게임 초기화
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('컴플라이언스팀장으로 살아보기 게임이 로드되었습니다! 🎮');
+            
+            // 버튼에 클릭 효과 이벤트 리스너 추가
+            document.querySelectorAll('button').forEach(button => {
+                button.addEventListener('mousedown', function() {
+                    this.style.transform = 'scale(0.95)';
+                });
+                button.addEventListener('mouseup', function() {
+                    this.style.transform = 'scale(1)';
+                });
+                button.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+        });
+    </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" integrity="sha512-ZpsOmlRQV6y907TI0dKBHq9Md29nnaEIPlkf84rnaERnq6zvWvPUqr2ft8M1aS28oN72PdrCzSjY4U6VaAw1EQ==" data-cf-beacon='{"rayId":"96cda7234f5cb34a","serverTiming":{"name":{"cfExtPri":true,"cfEdge":true,"cfOrigin":true,"cfL4":true,"cfSpeedBrain":true,"cfCacheStatus":true}},"version":"2025.7.0","token":"4edd5f8ec12a48cfa682ab8261b80a79"}' crossorigin="anonymous"></script>
+</body>
+</html>
+    <script id="html_badge_script1">
+        window.__genspark_remove_badge_link = "https://www.genspark.ai/api/html_badge/" +
+            "remove_badge?token=To%2FBnjzloZ3UfQdcSaYfDoX0S0kDeasQ%2F7ucWkMRhpxmQu7r6BtUsCnBGsXMqWDjLKn%2B%2BKl8YsPH1UUnKW%2Bfp4d2VxmMqrQwUffGwcnsz29NW3ZG%2FJxrcpdJTubhsas5Q7XNlWgOt8NSagP%2F37Fdjm5ppCIy6%2BUXJAPxj0GfXSC3GIxzLBY%2FfSNl7X9x%2Bc665Wjsv91OJQHom9lbDdjq2bcNy%2BlEb1lvkCUITujaYO5aSvMvYZtWfJRGjwgUY2MLwF3PFdXLCdXdbUEJJ0EsSbConkXsLz%2B%2FGZ%2BaJpuBdMJkwpZ0hktgr0pwPfEXj6F1g2YcaBjfxUo08%2Bd7sOo%2B%2BXxoCPd4SIWAcMfK71XyrLac54ixMcT3hLWSiwCuEeIE6bb6TgH51M%2FQoDE2MwhLQ7eshSe0wbdXOoc%2BgUTwtyx57rRWHJe0edsc5LdUTZNsn4xhPgygIUIXZrVyrJ56Z9elW2YHdJxzQS4dm13El3FNQj%2BUBdom9aU774H2rR%2BmIUrlbr6HNZVFC95h5POLEw%3D%3D";
+        window.__genspark_locale = "ko-KR";
+        window.__genspark_token = "To/BnjzloZ3UfQdcSaYfDoX0S0kDeasQ/7ucWkMRhpxmQu7r6BtUsCnBGsXMqWDjLKn++Kl8YsPH1UUnKW+fp4d2VxmMqrQwUffGwcnsz29NW3ZG/JxrcpdJTubhsas5Q7XNlWgOt8NSagP/37Fdjm5ppCIy6+UXJAPxj0GfXSC3GIxzLBY/fSNl7X9x+c665Wjsv91OJQHom9lbDdjq2bcNy+lEb1lvkCUITujaYO5aSvMvYZtWfJRGjwgUY2MLwF3PFdXLCdXdbUEJJ0EsSbConkXsLz+/GZ+aJpuBdMJkwpZ0hktgr0pwPfEXj6F1g2YcaBjfxUo08+d7sOo++XxoCPd4SIWAcMfK71XyrLac54ixMcT3hLWSiwCuEeIE6bb6TgH51M/QoDE2MwhLQ7eshSe0wbdXOoc+gUTwtyx57rRWHJe0edsc5LdUTZNsn4xhPgygIUIXZrVyrJ56Z9elW2YHdJxzQS4dm13El3FNQj+UBdom9aU774H2rR+mIUrlbr6HNZVFC95h5POLEw==";
+    </script>
+    
+    <script id="html_notice_dialog_script" src="https://www.genspark.ai/notice_dialog.js"></script>
+    
